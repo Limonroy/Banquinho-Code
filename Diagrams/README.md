@@ -54,7 +54,8 @@
 - Hasta que no reciba la señal de activación
      - Encender led1
      - delay(200)ms
-- Pasar a modo transmisor 
+- Pasar a modo transmisor
+- Pitido Buzzer 
 - **Pasa a Estado 4**
 
 ### Estado 4 (Prueba estática):
