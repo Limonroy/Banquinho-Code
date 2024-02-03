@@ -42,38 +42,40 @@
 ### Estado 2 (verificación "viva"):
 
 - 30 veces repetir (datos ambientales )
-      - Lectura y guardado en variables ADC:       (Loadcell1, Loadcell2, pressure1,pressure2,temp1,temp2)
-      - Lectura y guardado en variables Unidades:  (Loadcell1, Loadcell2, pressure1,pressure2,temp1,temp2)
-      - Construcción datos csv con las variables ADC y Unidades
-      - Enviar datos csv por LORA
-      - delay(1000)ms
+     - Lectura y guardado en variables ADC:       (Loadcell1, Loadcell2, pressure1,pressure2,temp1,temp2)
+     - Lectura y guardado en variables Unidades:  (Loadcell1, Loadcell2, pressure1,pressure2,temp1,temp2)
+     - Construcción datos csv con las variables ADC y Unidades
+     - Enviar datos csv por LORA
+     - delay(1000)ms
 - Pasar a modo receptor
 - **Pasa a Estado 3**
 
 ### Estado 3 (Esperando señal de activación):
 - Hasta que no reciba la señal de activación
-     -- Encender led1
-     -- delay(200)ms
+     - Encender led1
+     - delay(200)ms
 - Pasar a modo transmisor 
 - **Pasa a Estado 4**
 
 ### Estado 4 (Prueba estática):
 - Declaración e inicialización int variable contador = 0
 - Mientras (true)
-      - Si contador es = 75 entonces ---> (activa carga pirotécnica y pitido buzzer)
-      - Lectura y guardado en variables ADC:       (Loadcell1, Loadcell2, pressure1,pressure2,temp1,temp2)
-      - Lectura y guardado en variables Unidades:  (Loadcell1, Loadcell2, pressure1,pressure2,temp1,temp2)
-      - Construcción datos csv con las variables ADC y Unidades
-      - Enviar datos csv por LORA
-      - Guardar datos csv en la SD
-      - Blink LED2
-      - Contador+1
-      - delay(200)ms
+     - Si contador es igual a 75 entonces
+        - Activa carga pirotécnica
+        - Pitido buzzer
+     - Lectura y guardado en variables ADC:       (Loadcell1, Loadcell2, pressure1,pressure2,temp1,temp2)
+     - Lectura y guardado en variables Unidades:  (Loadcell1, Loadcell2, pressure1,pressure2,temp1,temp2)
+     - Construcción datos csv con las variables ADC y Unidades
+     - Enviar datos csv por LORA
+     - Guardar datos csv en la SD
+     - Blink LED2
+     - Aumenta en uno a contador
+     - delay(200)ms
 - **Pasa a Estado 5**
 
 ### Estado 5 (Desconectar):
 - Apagado total 
-
+- Programa Finalizado
 
 
  
