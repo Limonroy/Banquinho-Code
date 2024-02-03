@@ -61,8 +61,8 @@
 - Declaración e inicialización int variable contador = 0
 - Mientras (true)
      - Si contador es igual a 75 entonces
-        - Activa carga pirotécnica
         - Pitido buzzer
+        - Activa carga pirotécnica
      - Lectura y guardado en variables ADC:       (Loadcell1, Loadcell2, pressure1,pressure2,temp1,temp2)
      - Lectura y guardado en variables Unidades:  (Loadcell1, Loadcell2, pressure1,pressure2,temp1,temp2)
      - Construcción datos csv con las variables ADC y Unidades
