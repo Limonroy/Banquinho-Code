@@ -107,15 +107,15 @@ void setup() {
 
 /**
   * STATE TO MAKE THE "STATIC FIRE TEST"
-  * Saves and send 15 seconds of ambiental info for 
+  * Saves and send 60 seconds of ambiental info for 
   * not lose any info, then activate the pyro chanel
   * and then save the rest of the data 
   * todo: improve this function for better readability
 */
 void state4() {
   int c = 0;
-  // Save 15 seconds of ambiental data so as not to lose information
-  while (c < 75) {
+  // Save 60 seconds of ambiental data so as not to lose information
+  while (c < 300) {
     // Read the values of the load cell and update their vars values
     readCells();
     // Read the values of pressure sensor and update their vars values
