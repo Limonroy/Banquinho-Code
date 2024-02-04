@@ -13,36 +13,36 @@
 #include <LoRa.h>
 
 // *-----LOAD CELL PINS-----*
-#define HX711_DOUT1   7
-#define HX711_SCK1    8
+#define HX711_DOUT1   6
+#define HX711_SCK1    7
 
-#define HX711_DOUT2   7
-#define HX711_SCK2    8
+#define HX711_DOUT2   10
+#define HX711_SCK2    11
 
 // *-----PRESSURE SENSOR PINS-----*
 #define pressurePin1   27
-#define pressurePin2   27
+#define pressurePin2   26
 
 // *-----TEMPERATURE SENSOR PINS-----*
-#define temperaturePin1   27
-#define temperaturePin2   27
+#define temperaturePin1   14
+#define temperaturePin2   2
 
 // *-----SPI PINS-----*
 #define MISO         16 //21 físico
-#define CS_LORA      22 //17 - 29 físico
-#define CS_SD        29 //4
+#define CS_LORA      17 //17 - 29 físico 22 maybe
+#define CS_SD        22 //29 maybe
 #define MOSI         19 //25 físico
-#define DIO_0        10 //100000000 - 14 físico
-#define RST          26 //21 
-#define SCK          18 //24 físico
+#define DIO_0        20 //100000000 - 14 físico
+#define RST          21 //21 
+#define SCK          18 //24 maybe
                                                                     
 // *-----STATE SIGNALS PINS-----*
-#define LED_1     6   
-#define LED_2     3   
-#define BUZZER    17
+#define LED_1     8   
+#define LED_2     9   
+#define BUZZER    15
 
 // *-----PIROTECNIC CHANEL PIN-----*
-#define CH1       20
+#define CH1       13
 
 // *-----LOAD CELLS CONSTANTS, OBJECTS AND VARS-----*
 #define A1            7.72797e-05
