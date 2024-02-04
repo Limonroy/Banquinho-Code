@@ -54,9 +54,8 @@
 ### Estado 3 (Esperando señal de activación):
 - Hasta que no reciba la señal de activación
      - Encender led1
-     - delay(200)ms
+- Pitido Buzzer
 - Pasar a modo transmisor
-- Pitido Buzzer 
 - **Pasa a Estado 4**
 
 ### Estado 4 (Prueba estática):
