@@ -28,6 +28,7 @@
 - Definir constantes: Calibración (Loadcell1, Loadcell2)
 - Variables long  ADC:       (Loadcell1, Loadcell2, pressure1,pressure2,temp1,temp2)
 - Variables float Unidades:  (Loadcell1, Loadcell2, pressure1,pressure2,temp1,temp2)
+- Crear Objeto               (SD)
 - Variables string: Datos csv, nombre de archivo
 - **Pasa a Estado 1**
 
