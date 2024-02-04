@@ -100,6 +100,7 @@ void setup() {
   blink(LED1, 200);
   blink(LED2, 200);
   blink(LED2, 200);
+  buzz(BUZZER, 500);
 
   // STATE 4 TRANSITION ("STATIC FIRE TEST STATE")
   state4();
