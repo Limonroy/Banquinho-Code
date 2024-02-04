@@ -36,7 +36,7 @@
 - Inicializar comunicación serial 
 - Inicializar módulos: (LORA, SD, CP,LEDS,BUZZER)
 - Si no se inicializan marcar error
-- Crear archivo y encabezados en el archivo nombre de archivo
+- Crear nombre de archivo, archivo, encabezados en el archivo 
 - Inicialización correcta: 3 blinks(Sonido buzzer)
 - **Pasa a Estado 2**
  
