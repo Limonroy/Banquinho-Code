@@ -22,6 +22,15 @@ void buzz(int pin, int time) {
   delay(time);  
 }
 
+void kboom(int pin, int time, bool toBuzz) {
+  if (toBuzz) {
+    buzz(BUZZER, 500);  
+  }
+  digitalWrite(pin, HIGH);
+  delay(time);
+  digitalWrite(pin, LOW);
+}
+
 /*
  * Function to initialize the LoRa Module
 */

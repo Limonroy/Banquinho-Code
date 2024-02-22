@@ -80,6 +80,7 @@ String fileName;
 String dataCSV;
 
 // *-----EXTRA VARS-----*
+int c = 0;
 
 void setup() {
   Serial.begin(115200);
@@ -95,67 +96,30 @@ void setup() {
   header += "kgf1, kgf2, mpa1, mpa2, celsius1, celsius2";
   writeFile(fileName, header, false);
 
-  // BLINK OF SUCCESS OF SETUP
-  blink(LED1, 200);
-  blink(LED1, 200);
-  blink(LED2, 200);
-  blink(LED2, 200);
+  // BUZZ OF SUCCESS OF SETUP
   buzz(BUZZER, 500);
-
-  // STATE 4 TRANSITION ("STATIC FIRE TEST STATE")
-  state4();
 }
 
-/**
-  * STATE TO MAKE THE "STATIC FIRE TEST"
-  * Saves and send 60 seconds of ambiental info for 
-  * not lose any info, then activate the pyro chanel
-  * and then save the rest of the data 
-  * todo: improve this function for better readability
-*/
-void state4() {
-  int c = 0;
-  // Save 60 seconds of ambiental data so as not to lose information
-  while (c < 300) {
-    // Read the values of the load cell and update their vars values
-    readCells();
-    // Read the values of pressure sensor and update their vars values
-    readPressure();
-    // Read the values of temperature sensor and update their vars values
-    readTemperature();
-    // Build the CSV string
-    buildCsvString();
-    // Send the CSV string with LoRa
-    loraSend(dataCSV);
-    // Write data into de SD file
-    writeFile(fileName, dataCSV, true);
-    c += 1;
-    delay(200);
-  }
 
-  // ACTIVATE THE PIROTECNIC CHANEL
-  buzz(BUZZER,1000);
-  digitalWrite(CH1, HIGH);
-  delay(500);
-  digitalWrite(CH1, LOW);
-
-  // REST OF THE STATIC FIRE TEST   
-  while (true) {
-    // Read the values of the load cell and update their vars values
-    readCells();
-    // Read the values of pressure sensor and update their vars values
-    readPressure();
-    // Read the values of temperature sensor and update their vars values
-    readTemperature();
-    // Build the CSV string
-    buildCsvString();
-    // Send the CSV string with LoRa
-    loraSend(dataCSV);
-    // Write data into de SD file
-    writeFile(fileName, dataCSV, true);
-
-    delay(100);
-  } 
+void loop() {
+  // ACTIVATE THE PIROTECNIC CHANEL 60 segs
+  //if (c <= 600) {
+    //kboom(CH1, 500, true);
+  //} else {
+    //c++;  
+  //}
+  
+  // Read the values of the load cell and update their vars values
+  readCells();
+  // Read the values of pressure sensor and update their vars values
+  readPressure();
+  // Read the values of temperature sensor and update their vars values
+  readTemperature();
+  // Build the CSV string
+  buildCsvString();
+  // Send the CSV string with LoRa
+  loraSend(dataCSV);
+  // Write data into de SD file
+  writeFile(fileName, dataCSV, true);
+  delay(100);
 }
-
-void loop() {}
