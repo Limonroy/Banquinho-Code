@@ -100,84 +100,23 @@ void setup() {
   blink(LED1, 200);
   blink(LED2, 200);
   blink(LED2, 200);
+  buzz(BUZZER, 500);
 
-  // STATE 2 TRANSITION (Board is alive verification)
-  state2(0);
-}
-
-/** 
- * STATE TO MAKE THE "BOARD IS ALIVE VERIFICATION"
- * This function makes the board send us 30 data for 30 seconds to 
- * verify that it is alive, once the 30 data are sent, it goes to 
- * listening mode in state3 (Waiting the ignition signal).
- * @param counter number of data 
-*/
-void state2(int counter) {
-  // If the sensors were read and the data was sent for 30 seconds, change to state 3
-  if (counter == 30) {
-    // Pass to the STATE 3 (Waiting the ignition signal)
-    state3();
-  }
-
-  // Read the values of the load cell and update their vars values
-  readCells();
-  // Read the values of pressure sensor and update their vars values
-  readPressure();
-  // Read the values of temperature sensor and update their vars values
-  readTemperature();
-  // Build the CSV string
-  buildCsvString();
-  // Send the CSV string with LoRa
-  loraSend(dataCSV);
-
-  counter += 1;
-  delay(1000);
-}
-
-/**
-  * STATE TO MAKE THE "WAIT THE IGNITION SIGNAL"
-  * if recives the ignition signal, pass to the static
-  * fire test. While not, turn on the leds to indicate
-  * the board is waiting for the signal.
-*/
-void state3() {
-  // try to parse packet
-  int packetSize = LoRa.parsePacket();
-  
-  if (packetSize) {
-    while (LoRa.available()) {
-      char receivedChar = (char)LoRa.read();
-      //Serial.print(receivedChar);
-
-      // If the char recived is 'I' or 'i', goes to ignition state
-      if (receivedChar == 'I' || receivedChar == 'i') {
-        buzz(BUZZER, 500);
-        buzz(BUZZER, 500);
-        // Pass to the state4 (STATIC TEST STATE)
-        state4(); 
-      }
-    }
-
-    //Serial.print("' with RSSI ");
-    //Serial.println(LoRa.packetRssi());
-  }
-
-  blink(LED1, 10);
-  blink(LED2, 10);
-  state3();
+  // STATE 4 TRANSITION ("STATIC FIRE TEST STATE")
+  state4();
 }
 
 /**
   * STATE TO MAKE THE "STATIC FIRE TEST"
-  * Saves and send 15 seconds of ambiental info for 
+  * Saves and send 60 seconds of ambiental info for 
   * not lose any info, then activate the pyro chanel
   * and then save the rest of the data 
   * todo: improve this function for better readability
 */
 void state4() {
   int c = 0;
-  // Save 15 seconds of ambiental data so as not to lose information
-  while (c < 75) {
+  // Save 60 seconds of ambiental data so as not to lose information
+  while (c < 300) {
     // Read the values of the load cell and update their vars values
     readCells();
     // Read the values of pressure sensor and update their vars values
@@ -195,7 +134,7 @@ void state4() {
   }
 
   // ACTIVATE THE PIROTECNIC CHANEL
-  buzz(BUZZER,500);
+  buzz(BUZZER,1000);
   digitalWrite(CH1, HIGH);
   delay(500);
   digitalWrite(CH1, LOW);
