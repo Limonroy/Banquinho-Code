@@ -80,7 +80,6 @@ String fileName;
 String dataCSV;
 
 // *-----EXTRA VARS-----*
-int c = 0;
 
 void setup() {
   Serial.begin(115200);
@@ -92,34 +91,33 @@ void setup() {
   fileName = createFileName("data", ".csv");
 
   // CREATE HEADERS TO THE FILE
-  String header = "t[s], cellADC1, cellADC2, pressureADC1, pressureADC2, tempADC1, tempADC2,";
-  header += "kgf1, kgf2, mpa1, mpa2, celsius1, celsius2";
+  //String header = "t[s], cellADC1, cellADC2, pressureADC1, pressureADC2, tempADC1, tempADC2,";
+  //header += "kgf1, kgf2, mpa1, mpa2, celsius1, celsius2";
+  String header = "t[s], cellADC1, pressureADC1,";
+  header += "kgf1, mpa1";
   writeFile(fileName, header, false);
 
   // BUZZ OF SUCCESS OF SETUP
-  buzz(BUZZER, 500);
+  buzz(15, 500);
 }
 
 
 void loop() {
   // ACTIVATE THE PIROTECNIC CHANEL 60 segs
-  //if (c <= 600) {
-    //kboom(CH1, 500, true);
-  //} else {
-    //c++;  
-  //}
   
   // Read the values of the load cell and update their vars values
   readCells();
   // Read the values of pressure sensor and update their vars values
   readPressure();
   // Read the values of temperature sensor and update their vars values
-  readTemperature();
+  //readTemperature();
   // Build the CSV string
   buildCsvString();
   // Send the CSV string with LoRa
   loraSend(dataCSV);
   // Write data into de SD file
   writeFile(fileName, dataCSV, true);
+  Serial.println(dataCSV);
+  
   delay(100);
 }

@@ -24,7 +24,7 @@ void buzz(int pin, int time) {
 
 void kboom(int pin, int time, bool toBuzz) {
   if (toBuzz) {
-    buzz(BUZZER, 500);  
+    buzz(15, 500);  
   }
   digitalWrite(pin, HIGH);
   delay(time);
@@ -52,9 +52,9 @@ void lora_init() {
  * Function to initialize the SD Module
 */
 void sd_init() {
-  while (!sd.begin(CS_SD, SPI_HALF_SPEED)) {
+  if (!sd.begin(CS_SD, SPI_HALF_SPEED)) {
     Serial.println("ERROR IN THE SD INITIALIZATION!");
-    blink(LED1, 50); // Blink until the SD BEGIN CORRECTLY
+    blink(9, 50); // Blink until the SD BEGIN CORRECTLY
   } 
   Serial.println("SD INITIALIZATION SUCCESFULL!");
 }
@@ -64,10 +64,10 @@ void sd_init() {
 */
 void start_modules() {
   // LEDS AND PIROTECNIC CHANEL INITIALIZATION
-  pinMode(LED_1, OUTPUT);
-  pinMode(LED_2, OUTPUT);
-  pinMode(BUZZER, OUTPUT);
-  pinMode(CH1, OUTPUT);
+  pinMode(8, OUTPUT);
+  pinMode(9, OUTPUT);
+  pinMode(15, OUTPUT);
+  pinMode(13, OUTPUT);
 
   // SD BEGIN PROCEDURE
   sd_init();
@@ -76,10 +76,10 @@ void start_modules() {
   lora_init();
   
   // Blink four time to indicate success
-  blink(LED1, 200);
-  blink(LED2, 200);
-  blink(LED1, 200);
-  blink(LED2, 200);
+  blink(8, 200);
+  blink(9, 200);
+  blink(8, 200);
+  blink(9, 200);
 }
 
 /**
@@ -134,7 +134,7 @@ void writeFile(String name, String data, bool toBlink) {
     
     // Blinks to indicate tha the data was written correctly
     if (toBlink) {
-      blink(LED1, 10);
+      blink(8, 10);
     }
 
   } else {
@@ -151,8 +151,8 @@ void readCells() {
   kgf1 = A1 * cellADC1 + B1;
 
   // Load Cell 2 
-  cellADC2 = loadcell2.read();
-  kgf2 = A2 * cellADC2 + B2;
+  //cellADC2 = loadcell2.read();
+  //kgf2 = A2 * cellADC2 + B2;
 }
 
 /**
@@ -179,9 +179,9 @@ void readPressure() {
   mpa1 =  mapping(voltage1,0.5,4.5,0,6.8948);
 
   // Pressure Sensor 2
-  pressureADC2 = analogRead(pressurePin2);
-  float voltage2 = (float) pressureADC2 * (5.0/1023.0);
-  mpa2 =  mapping(voltage2,0.5,4.5,0,6.8948);
+  //pressureADC2 = analogRead(pressurePin2);
+  //float voltage2 = (float) pressureADC2 * (5.0/1023.0);
+  //mpa2 =  mapping(voltage2,0.5,4.5,0,6.8948);
 }
 
 /**
@@ -201,12 +201,16 @@ void readTemperature() {
  * Function to update the casv string with the values of vars of the data
  * of that moment
 */
+//void buildCsvString() {
+  //dataCSV = (String) millis() + "," + (String) cellADC1 + "," + (String) cellADC2 + ",";
+  //dataCSV += (String) pressureADC1 + "," + (String) pressureADC2 + ",";
+  //dataCSV += (String) temperatureADC1 + "," + (String) temperatureADC2 + ",";  
+  //dataCSV += (String) kgf1 + "," + (String) kgf2 + "," + (String) mpa1 + ","; 
+  //dataCSV += (String) mpa2 + "," + (String) celsius1 + "," + (String) celsius2;
+//}
 void buildCsvString() {
-  dataCSV = (String) millis() + "," + (String) cellADC1 + "," + (String) cellADC2 + ",";
-  dataCSV += (String) pressureADC1 + "," + (String) pressureADC2 + ",";
-  dataCSV += (String) temperatureADC1 + "," + (String) temperatureADC2 + ",";  
-  dataCSV += (String) kgf1 + "," + (String) kgf2 + "," + (String) mpa1 + ","; 
-  dataCSV += (String) mpa2 + "," + (String) celsius1 + "," + (String) celsius2;
+  dataCSV = (String) millis() + "," + (String) cellADC1 + "," + (String) pressureADC1 + ",";
+  dataCSV += (String) kgf1 + "," + (String) mpa1; 
 }
 
 /**
