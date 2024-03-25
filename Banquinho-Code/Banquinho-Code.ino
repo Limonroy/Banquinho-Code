@@ -45,8 +45,8 @@
 #define CH1       13
 
 // *-----LOAD CELLS CONSTANTS, OBJECTS AND VARS-----*
-#define A1            7.72797e-05
-#define B1            -646.825
+#define A1           /*0.00004*/ 7.72797e-05
+#define B1          /*-0.673906*/  -646.825
 
 #define A2            7.72797e-05
 #define B2            -646.825
@@ -116,8 +116,10 @@ void loop() {
   // Send the CSV string with LoRa
   loraSend(dataCSV);
   // Write data into de SD file
-  writeFile(fileName, dataCSV, true);
+  //writeFile(fileName, dataCSV, true);
+  
   Serial.println(dataCSV);
+
   
   delay(100);
 }

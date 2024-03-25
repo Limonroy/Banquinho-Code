@@ -42,7 +42,7 @@ void lora_init() {
   }
   // SF -> 7
   // CR -> 4
-  LoRa.setSyncWord(0xF3);
+  LoRa.setSyncWord(0xB2);
   //LoRa.setSpreadingFactor(6);
   //LoRa.setSignalBandwidth(125E3);
   //LoRa.setTxPower(18);
@@ -151,8 +151,8 @@ void readCells() {
   kgf1 = A1 * cellADC1 + B1;
 
   // Load Cell 2 
-  //cellADC2 = loadcell2.read();
-  //kgf2 = A2 * cellADC2 + B2;
+  cellADC2 = loadcell2.read();
+  kgf2 = A2 * cellADC2 + B2;
 }
 
 /**
@@ -178,10 +178,10 @@ void readPressure() {
   float voltage1 = (float) pressureADC1 * (5.0/1023.0);
   mpa1 =  mapping(voltage1,0.5,4.5,0,6.8948);
 
-  // Pressure Sensor 2
-  //pressureADC2 = analogRead(pressurePin2);
-  //float voltage2 = (float) pressureADC2 * (5.0/1023.0);
-  //mpa2 =  mapping(voltage2,0.5,4.5,0,6.8948);
+  //Pressure Sensor 2
+  pressureADC2 = analogRead(pressurePin2);
+  float voltage2 = (float) pressureADC2 * (5.0/1023.0);
+  mpa2 =  mapping(voltage2,0.5,4.5,0,6.8948);
 }
 
 /**
@@ -209,8 +209,10 @@ void readTemperature() {
   //dataCSV += (String) mpa2 + "," + (String) celsius1 + "," + (String) celsius2;
 //}
 void buildCsvString() {
-  dataCSV = (String) millis() + "," + (String) cellADC1 + "," + (String) pressureADC1 + ",";
-  dataCSV += (String) kgf1 + "," + (String) mpa1; 
+  //dataCSV = (String) millis() + "," + (String) cellADC1 + "," + (String) pressureADC1 + ",";
+  //dataCSV += (String) kgf1 + "," + (String) mpa1; 
+  dataCSV = (String) millis() + "," + (String) cellADC1 + "," + (String) cellADC2 + ",";
+  dataCSV += (String) pressureADC1 + "," + (String) pressureADC2 + ",";
 }
 
 /**
@@ -221,4 +223,8 @@ void loraSend(String data) {
   LoRa.beginPacket();
   LoRa.print(data);
   LoRa.endPacket();
+  digitalWrite(8,HIGH); 
+  delay(500); 
+  digitalWrite(8,LOW);
+  delay(500);  
 }
